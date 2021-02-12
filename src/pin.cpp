@@ -26,6 +26,11 @@ void nts::Pin::setType(nts::Pin::Type type)
     _type = type;
 }
 
+nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state, nts::IComponent *component) : _type(type),
+_state(state), _component(component)
+{
+}
+
 nts::Pin::Pin()
 {
     _type = U;

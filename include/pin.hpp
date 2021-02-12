@@ -11,12 +11,13 @@
 
 namespace nts {
     class Pin {
+        public:
         enum Type {
             U,
             I,
             O
         };
-        public:
+            Pin(Type, Tristate, IComponent*);
             Pin();
             ~Pin() = default;
             void setComponent(IComponent&);
@@ -26,7 +27,7 @@ namespace nts {
         private:
             Type _type;
             Tristate _state;
-            IComponent *_component{};
+            IComponent *_component;
     };
 }
 #endif //BOOTSTRAP_PIN_HPP
