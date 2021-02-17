@@ -7,7 +7,7 @@
 #include <sstream>
 #include "include/componentCreator.hpp"
 
-nts::PinMap nts::ComponentCreator::create(const std::string& filename, std::unique_ptr<IComponent> component)
+nts::PinMap nts::ComponentCreator::create_map(const std::string& filename, IComponent *component)
 {
     PinMap map;
     std::ifstream infile(filename);
@@ -20,7 +20,7 @@ nts::PinMap nts::ComponentCreator::create(const std::string& filename, std::uniq
             type = line.substr(0, line.find(' '));
             name = line.substr(line.find(' ') + 1, std::string::npos);
             if (type == "input")
-                map.addPin(Pin::I, UNDEFINED, component.release());
+                map.addPin(Pin::I, UNDEFINED, component);
         }
     }
 
