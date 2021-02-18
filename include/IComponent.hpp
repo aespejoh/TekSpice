@@ -24,6 +24,10 @@ namespace nts {
         virtual nts::Tristate compute(std::size_t pin) = 0;
         virtual void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) = 0;
         virtual void dump() const = 0;
+        virtual std::string getType() {return _type;};
+        virtual void setType(const std::string &type) {_type = type;};
+        private:
+            std::string _type;
     };
 }
 

@@ -25,4 +25,5 @@ void nts::PinMap::addPin(nts::Pin::Type type, nts::Tristate state, nts::ICompone
 {
     Pin pin(type, state, component);
     _pins.push_back(pin);
+    n_pin++;
 }

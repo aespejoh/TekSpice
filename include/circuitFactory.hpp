@@ -9,23 +9,18 @@
 
 #include "IComponent.hpp"
 #include "c4081.hpp"
+#include "c4001.hpp"
 
 namespace nts {
     class CircuitFactory {
-
-        struct Components_ptr
-        {
-            std::string type;
-            std::unique_ptr<nts::IComponent>(*func)();
-        };
         public:
             CircuitFactory();
             std::unique_ptr<nts::IComponent> createComponent(const std::string &type);
         private:
-            static Components_ptr fill_vector(std::string type, std::unique_ptr<IComponent>(*func)());
-            std::vector<Components_ptr> _components_ptr_list;
-            static std::unique_ptr<nts::IComponent> create4081();
-
+            std::vector<std::string> _components_ptr_list_str;
+            std::vector<std::unique_ptr<nts::IComponent>> _components_ptr_list;
+            std::unique_ptr<nts::IComponent> create4081() const noexcept;
+            std::unique_ptr<nts::IComponent> create4001() const noexcept;
     };
 }
 #endif //BOOTSTRAP_CIRCUITFACTORY_HPP

@@ -13,27 +13,27 @@ std::unique_ptr<nts::IComponent> nts::CircuitFactory::createComponent(
     const std::string &type
 )
 {
-    for (auto i = _components_ptr_list.begin(); i != _components_ptr_list.end(); i++) {
-        if (type == i->type)
-            return i->func();
-    }
+    auto e = _components_ptr_list_str.begin();
+    for (auto i = _components_ptr_list.begin(); i != _components_ptr_list.end(); i++, e++)
+        if (type == *e)
+            return static_cast<std::unique_ptr<IComponent>>(i->get());
+    return nullptr;
 }
 
 nts::CircuitFactory::CircuitFactory()
 {
-    _components_ptr_list.push_back(fill_vector("4081", create4081));
+    _components_ptr_list_str.emplace_back("4081");
+    _components_ptr_list.push_back(create4081());
+    _components_ptr_list_str.emplace_back("4001");
+    _components_ptr_list.push_back(create4001());
 }
 
-nts::CircuitFactory::Components_ptr nts::CircuitFactory::fill_vector(
-    std::string type, std::unique_ptr<IComponent> (*func)())
-{
-    Components_ptr comp;
-    comp.type = std::move(type);
-    comp.func = func;
-    return comp;
-}
-
-std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4081()
+std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4081() const noexcept
 {
     return std::make_unique<C4081>();
+}
+
+std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4001() const noexcept
+{
+    return std::make_unique<C4001>();
 }

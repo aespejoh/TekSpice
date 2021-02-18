@@ -14,8 +14,9 @@ namespace nts {
     class Circuit {
         public:
         ~Circuit();
+        void addComponent(IComponent*);
         private:
-            std::vector<IComponent> _circuit;
+            std::vector<IComponent*> _circuit;
     };
 }
 #endif //BOOTSTRAP_CIRCUIT_HPP

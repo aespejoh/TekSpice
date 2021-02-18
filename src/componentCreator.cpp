@@ -7,7 +7,17 @@
 #include <sstream>
 #include "include/componentCreator.hpp"
 
-nts::PinMap nts::ComponentCreator::create_map(const std::string& filename, IComponent *component)
+void add_to_map(nts::PinMap *map, std::string name, std::string type, nts::IComponent *component)
+{
+    if (type == "input")
+        map->addPin(nts::Pin::I, nts::UNDEFINED, component);
+    else if (type == "output")
+        map->addPin(nts::Pin::O, nts::UNDEFINED, component);
+    else
+        component->setType(type);
+}
+
+nts::PinMap nts::ComponentCreator::create_map_chipset(const std::string& filename, IComponent *component)
 {
     PinMap map;
     std::ifstream infile(filename);
@@ -19,10 +29,8 @@ nts::PinMap nts::ComponentCreator::create_map(const std::string& filename, IComp
         while (std::getline(infile, line)) {
             type = line.substr(0, line.find(' '));
             name = line.substr(line.find(' ') + 1, std::string::npos);
-            if (type == "input")
-                map.addPin(Pin::I, UNDEFINED, component);
+            add_to_map(&map, name, type, component);
         }
     }
-
     return map;
 }

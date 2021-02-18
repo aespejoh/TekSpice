@@ -14,7 +14,7 @@
 namespace nts {
     class ComponentCreator {
         public:
-            PinMap create_map(const std::string& filename, IComponent *component);
+            PinMap create_map_chipset(const std::string& filename, IComponent *component);
     };
 }
 #endif //BOOTSTRAP_COMPONENTCREATOR_HPP
