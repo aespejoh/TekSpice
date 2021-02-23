@@ -28,6 +28,7 @@ void example() {}
 
 void nts::graph::sepParse(nts::Parser parse)
 {
+    CircuitFactory factory;
     _command_list.insert(std::make_pair("input", &graph::sepInputs));
     _command_list.insert(std::make_pair("output", &graph::sepOutputs));
     _command_list.insert(std::make_pair("4081", &graph::sepCircuit));
@@ -117,7 +118,8 @@ void nts::graph::createGraph(const std::string& componentOne,
 
 void nts::graph::sepInputs(std::string component)
 {
-    _components.push_back(createComponent(component, INPUTS));
+    _components.push_back(factory)
+    //_components.push_back(createComponent(component, INPUTS));
 }
 
 void nts::graph::sepOutputs(std::string component)

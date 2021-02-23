@@ -15,25 +15,7 @@
 #include "include/fileParser/parser.hpp"
 #include "IComponent.hpp"
 #include <map>
-
-struct A {
-    typedef int (A::*MFP)(int);
-    std::map <std::string, MFP> fmap;
-
-    int f( int x ) { return x + 1; }
-    int g( int x ) { return x + 2; }
-
-
-    A() {
-        fmap.insert( std::make_pair( "f", &A::f ));
-        fmap.insert( std::make_pair( "g", &A::g ));
-    }
-
-    int Call( const std::string & s, int x ) {
-        MFP fp = fmap[s];
-        return (this->*fp)(x);
-    }
-};
+#include "circuitFactory.hpp"
 
 namespace nts {
     class graph {
@@ -67,7 +49,8 @@ namespace nts {
         int getValue(std::string component);
         component getComponent(std::string name);
 
-        std::vector<component> _components;
+        std::vector<IComponent> _components;
+        //std::vector<component> _components;
         std::vector<std::vector<component>> _graph;
 
         bool is_link;
