@@ -24,16 +24,20 @@ nts::graph::graph(nts::File *file)
     }
 }
 
+void example() {}
+
 void nts::graph::sepParse(nts::Parser parse)
 {
+    _command_list.insert(std::make_pair("input", &graph::sepInputs));
+    _command_list.insert(std::make_pair("output", &graph::sepOutputs));
+    _command_list.insert(std::make_pair("4081", &graph::sepCircuit));
+
     if (is_chipset) {
         for (int i = 0; i < parse.getComponents().size(); i++) {
-            if (parse.getComponents()[i] == "input")
-                sepInputs(parse.getComponents()[i += 1]);
-            else if (parse.getComponents()[i] == "output")
-                sepOutputs(parse.getComponents()[i += 1]);
-            else if (parse.getComponents()[i] == "4081")
-                sepCircuit(parse.getComponents()[i += 1]);
+            auto it = _command_list.find(parse.getComponents()[i]);
+            if (it == _command_list.end())
+                continue;
+            (this->*it->second)(parse.getComponents()[i += 1]);
         }
     } else if (is_link) {
         for (int i = 0; i < parse.getComponents().size(); i += 2) {
@@ -60,15 +64,6 @@ int nts::graph::getValue(std::string component)
     _value >> value;
     return (value);
 }
-
-/*void nts::graph::displayGraph()
-{
-    for (int i = 0; i < _graph.size(); ++i) {
-        for (int j = 0; j < _graph[i]; ++j) {
-            
-        }
-    }
-}*/
 
 nts::graph::component nts::graph::getComponent(std::string name)
 {

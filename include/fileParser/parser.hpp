@@ -19,7 +19,7 @@ namespace nts {
         Parser(std::string &line);
         void removeComment();
         void sepSpaces();
-        std::vector<std::string> getComponents(void);
+        std::vector<std::string> getComponents();
 
     private:
         std::string &_line;

@@ -7,7 +7,6 @@
 
 #include "circuitFactory.hpp"
 #include <algorithm>
-#include <utility>
 
 std::unique_ptr<nts::IComponent> nts::CircuitFactory::createComponent(
     const std::string &type
@@ -22,6 +21,10 @@ std::unique_ptr<nts::IComponent> nts::CircuitFactory::createComponent(
 
 nts::CircuitFactory::CircuitFactory()
 {
+    _components_ptr_list_str.emplace_back("input");
+    _components_ptr_list.push_back(createInput());
+    _components_ptr_list_str.emplace_back("output");
+    _components_ptr_list.push_back(createOutput());
     _components_ptr_list_str.emplace_back("4081");
     _components_ptr_list.push_back(create4081());
     _components_ptr_list_str.emplace_back("4001");
@@ -36,4 +39,14 @@ std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4081() const noexcep
 std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4001() const noexcept
 {
     return std::make_unique<C4001>();
+}
+
+std::unique_ptr<nts::IComponent> nts::CircuitFactory::createInput() const noexcept
+{
+    return std::make_unique<Input>();
+}
+
+std::unique_ptr<nts::IComponent> nts::CircuitFactory::createOutput() const noexcept
+{
+    return std::make_unique<Output>();
 }

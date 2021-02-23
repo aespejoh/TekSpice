@@ -14,10 +14,32 @@
 #include "include/fileParser/file.hpp"
 #include "include/fileParser/parser.hpp"
 #include "IComponent.hpp"
+#include <map>
+
+struct A {
+    typedef int (A::*MFP)(int);
+    std::map <std::string, MFP> fmap;
+
+    int f( int x ) { return x + 1; }
+    int g( int x ) { return x + 2; }
+
+
+    A() {
+        fmap.insert( std::make_pair( "f", &A::f ));
+        fmap.insert( std::make_pair( "g", &A::g ));
+    }
+
+    int Call( const std::string & s, int x ) {
+        MFP fp = fmap[s];
+        return (this->*fp)(x);
+    }
+};
 
 namespace nts {
     class graph {
     public:
+        typedef void (graph::*fnc_ptr)(std::string);
+        typedef std::map<std::string, fnc_ptr> map_t;
         enum Type {
             INPUTS,
             OUTPUTS,
@@ -50,6 +72,7 @@ namespace nts {
 
         bool is_link;
         bool is_chipset;
+        map_t _command_list;
     };
 }
 
