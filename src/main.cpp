@@ -6,6 +6,7 @@
 #include "core.hpp"
 #include "parser.hpp"
 #include "graph.hpp"
+#include "exceptions/basicException.hpp"
 
 int main(int ac, char **av)
 {
@@ -23,8 +24,11 @@ int main(int ac, char **av)
     core.init();
 */
 
-    nts::File file(av[1]);
-    nts::graph graph(&file);
-
+    try {
+        nts::File file(av[1]);
+        nts::graph graph(&file);
+    } catch (nts::basicException exception) {
+        std::cout << "An exception:" << exception.what() << std::endl;
+    }
     return 0;
 }

@@ -6,6 +6,7 @@
 */
 
 #include "include/fileParser/file.hpp"
+#include "exceptions/fileException.hpp"
 
 nts::File::File(std::string filepath)
 {
@@ -14,7 +15,8 @@ nts::File::File(std::string filepath)
     std::ifstream file{_filepath};
 
     if (!file.is_open())
-        std::cout << "Could not open File";
+        throw nts::fileException("File not opened");
+        //std::cout << "Could not open File";
     std::stringstream buffer;
     buffer << file.rdbuf();
     _lines = buffer.str();
