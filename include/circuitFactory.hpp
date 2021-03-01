@@ -23,8 +23,6 @@ namespace nts {
             typedef std::map<std::string, fnc_ptr> map_t;
         private:
             map_t _command_list;
-            std::vector<std::string> _components_ptr_list_str;
-            std::vector<std::unique_ptr<nts::IComponent>> _components_ptr_list;
             std::unique_ptr<nts::IComponent> create4081();
             std::unique_ptr<nts::IComponent> create4001();
             std::unique_ptr<nts::IComponent> createInput();
