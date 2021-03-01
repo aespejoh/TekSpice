@@ -26,8 +26,11 @@ namespace nts {
         virtual void dump() const = 0;
         virtual std::string getType() {return _type;};
         virtual void setType(const std::string &type) {_type = type;};
+        virtual void setName(const std::string &name) {_name = name;};
+        const std::string &getName() const {return _name;}
         private:
             std::string _type;
+            std::string _name;
     };
 }
 

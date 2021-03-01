@@ -12,19 +12,23 @@
 #include "c4001.hpp"
 #include "input.hpp"
 #include "output.hpp"
+#include <map>
 
 namespace nts {
     class CircuitFactory {
         public:
             CircuitFactory();
             std::unique_ptr<nts::IComponent> createComponent(const std::string &type);
+            typedef std::unique_ptr<nts::IComponent>(CircuitFactory::*fnc_ptr)();
+            typedef std::map<std::string, fnc_ptr> map_t;
         private:
+            map_t _command_list;
             std::vector<std::string> _components_ptr_list_str;
             std::vector<std::unique_ptr<nts::IComponent>> _components_ptr_list;
-            std::unique_ptr<nts::IComponent> create4081() const noexcept;
-            std::unique_ptr<nts::IComponent> create4001() const noexcept;
-            std::unique_ptr<nts::IComponent> createInput() const noexcept;
-            std::unique_ptr<nts::IComponent> createOutput() const noexcept;
+            std::unique_ptr<nts::IComponent> create4081();
+            std::unique_ptr<nts::IComponent> create4001();
+            std::unique_ptr<nts::IComponent> createInput();
+            std::unique_ptr<nts::IComponent> createOutput();
     };
 }
 #endif //BOOTSTRAP_CIRCUITFACTORY_HPP

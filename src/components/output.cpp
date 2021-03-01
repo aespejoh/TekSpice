@@ -11,6 +11,7 @@ nts::Output::Output()
 {
     ComponentCreator creator;
     _map = creator.create_map_chipset("nts/output.nts", this);
+    this->setType("output");
 }
 
 nts::Output::~Output()

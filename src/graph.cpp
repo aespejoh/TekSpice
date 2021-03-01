@@ -24,22 +24,24 @@ nts::graph::graph(nts::File *file)
     }
 }
 
-void example() {}
-
 void nts::graph::sepParse(nts::Parser parse)
 {
-    CircuitFactory factory;
     _command_list.insert(std::make_pair("input", &graph::sepInputs));
     _command_list.insert(std::make_pair("output", &graph::sepOutputs));
     _command_list.insert(std::make_pair("4081", &graph::sepCircuit));
 
     if (is_chipset) {
-        for (int i = 0; i < parse.getComponents().size(); i++) {
-            auto it = _command_list.find(parse.getComponents()[i]);
+        //for (int i = 0; i < parse.getComponents().size(); i++) {
+            auto it = _command_list.find(parse.getComponents()[0]);
             if (it == _command_list.end())
-                continue;
-            (this->*it->second)(parse.getComponents()[i += 1]);
-        }
+                return;
+            //std::shared_ptr<IComponent> component = factory.createComponent(it->first);
+            IComponent *component = factory.createComponent(it->first).release();
+            component->setName(parse.getComponents()[1]);
+            _components.push_back(component);
+            component = nullptr;
+            //(this->*it->second)();
+        //}
     } else if (is_link) {
         for (int i = 0; i < parse.getComponents().size(); i += 2) {
             if (parse.getComponents()[i] != ".links:")
@@ -66,31 +68,31 @@ int nts::graph::getValue(std::string component)
     return (value);
 }
 
-nts::graph::component nts::graph::getComponent(std::string name)
+nts::IComponent * nts::graph::getComponent(std::string name)
 {
-    component component;
+    IComponent *component = nullptr;
 
-    for (int i = 0; i < _components.size(); ++i) {
-        if (_components[i].name == name) {
-            component.name = _components[i].name;
-            component.value = _components[i].value;
-            component.type = _components[i].type;
+    for (auto & item : _components) {
+        if (item->getName() == name) {
+            component = item;
             return component;
         }
     }
     return component;
+
 }
 
 void nts::graph::createGraph(const std::string& componentOne,
                              const std::string& componentTwo)
 {
-    std::vector<component> tmp;
+    std::vector<IComponent*> tmp;
     //setValue(componentOne);
     //setValue(componentTwo);
     std::string nameOne = getName(componentOne);
     std::string nameTwo = getName(componentTwo);
-    component firstComponent = getComponent(nameOne);
-    component secondComponent = getComponent(nameTwo);
+
+    IComponent *firstComponent = getComponent(nameOne);
+    IComponent *secondComponent = getComponent(nameTwo);
 
     tmp.push_back(firstComponent);
     tmp.push_back(secondComponent);
@@ -118,18 +120,18 @@ void nts::graph::createGraph(const std::string& componentOne,
 
 void nts::graph::sepInputs(std::string component)
 {
-    _components.push_back(factory)
-    //_components.push_back(createComponent(component, INPUTS));
+    //_components.push_back(factory.createComponent(component).get());
+    //_components.push_back();
 }
 
 void nts::graph::sepOutputs(std::string component)
 {
-    _components.push_back(createComponent(component, OUTPUTS));
+    //_components.push_back(createComponent(component, OUTPUTS));
 }
 
 void nts::graph::sepCircuit(std::string component)
 {
-    _components.push_back(createComponent(component, CIRCUIT));
+    //_components.push_back(createComponent(component, CIRCUIT));
 }
 
 nts::graph::component nts::graph::createComponent(std::string name, Type type)

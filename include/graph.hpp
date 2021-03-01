@@ -47,12 +47,11 @@ namespace nts {
         void setValue(std::string component);
         std::string getName(std::string component);
         int getValue(std::string component);
-        component getComponent(std::string name);
-
-        std::vector<IComponent> _components;
+        IComponent * getComponent(std::string name);
+        std::vector<IComponent*> _components;
         //std::vector<component> _components;
-        std::vector<std::vector<component>> _graph;
-
+        std::vector<std::vector<IComponent*>> _graph;
+        CircuitFactory factory;
         bool is_link;
         bool is_chipset;
         map_t _command_list;

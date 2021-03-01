@@ -11,6 +11,7 @@ nts::Input::Input()
 {
     ComponentCreator creator;
     _map = creator.create_map_chipset("nts/input.nts", this);
+    this->setType("input");
 }
 
 nts::Input::~Input()
