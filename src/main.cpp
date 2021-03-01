@@ -7,25 +7,23 @@
 #include "parser.hpp"
 #include "graph.hpp"
 #include "exceptions/basicException.hpp"
+#include "execute/execute.hpp"
 
 int main(int ac, char **av)
 {
-
-    nts::Circuit circuit;
-    nts::CircuitFactory factory;
-    nts::IComponent *component;
-    Parser parser;
-    component = factory.createComponent("input").release();
-    circuit.addComponent(component);
-    component = factory.createComponent("4001").release();
-    component = factory.createComponent("4081").release();
-    circuit.addComponent(component);
-    Core core(ac, av);
-    core.init();
+    nts::execute exec;
+    std::string command;
+    int i = 0;
 
     try {
         nts::File file(av[1]);
         nts::graph graph(&file);
+        while (!exec.getEnd() && i < 2) {
+            std::cout << "> ";
+            std::cin >> command;
+            std::cout << command << std::endl;
+            i++;
+        }
     } catch (nts::basicException exception) {
         std::cout << "An exception:" << exception.what() << std::endl;
     }
