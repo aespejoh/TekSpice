@@ -12,7 +12,7 @@ nts::graph::graph(nts::File *file)
     std::string line;
 
     while (file->nextLine(line)) {
-        nts::Parser parse(line);
+        nts::Line parse(line);
         if (line == ".links:") {
             is_link = true;
             is_chipset = false;
@@ -24,24 +24,17 @@ nts::graph::graph(nts::File *file)
     }
 }
 
-void nts::graph::sepParse(nts::Parser parse)
+void nts::graph::sepParse(nts::Line parse)
 {
-    _command_list.insert(std::make_pair("input", &graph::sepInputs));
-    _command_list.insert(std::make_pair("output", &graph::sepOutputs));
-    _command_list.insert(std::make_pair("4081", &graph::sepCircuit));
-
+    if (parse.getComponents().size() != 2)
+        return;
     if (is_chipset) {
-        //for (int i = 0; i < parse.getComponents().size(); i++) {
-            auto it = _command_list.find(parse.getComponents()[0]);
-            if (it == _command_list.end())
-                return;
-            //std::shared_ptr<IComponent> component = factory.createComponent(it->first);
-            IComponent *component = factory.createComponent(it->first).release();
-            component->setName(parse.getComponents()[1]);
-            _components.push_back(component);
-            component = nullptr;
-            //(this->*it->second)();
-        //}
+        IComponent *component = factory.createComponent(parse.getComponents()[0]).release();
+        if (component == nullptr)
+            return;
+        component->setName(parse.getComponents()[1]);
+        _components.push_back(component);
+        component = nullptr;
     } else if (is_link) {
         for (int i = 0; i < parse.getComponents().size(); i += 2) {
             if (parse.getComponents()[i] != ".links:")
@@ -118,6 +111,7 @@ void nts::graph::createGraph(const std::string& componentOne,
     }
 }*/
 
+/*
 void nts::graph::sepInputs(std::string component)
 {
     //_components.push_back(factory.createComponent(component).get());
@@ -133,6 +127,7 @@ void nts::graph::sepCircuit(std::string component)
 {
     //_components.push_back(createComponent(component, CIRCUIT));
 }
+*/
 
 nts::graph::component nts::graph::createComponent(std::string name, Type type)
 {

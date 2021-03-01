@@ -5,7 +5,7 @@
 ** Created by aespejo,
 */
 #include "core.hpp"
-#include "parser.hpp"
+#include "include/fileParser/parser.hpp"
 
 std::vector<std::string> Core::array_to_vector(char **av)
 {

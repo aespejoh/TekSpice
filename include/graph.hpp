@@ -12,7 +12,7 @@
 #include <sstream>
 #include <vector>
 #include "include/fileParser/file.hpp"
-#include "include/fileParser/parser.hpp"
+#include "include/fileParser/line.hpp"
 #include "IComponent.hpp"
 #include <map>
 #include "circuitFactory.hpp"
@@ -20,8 +20,6 @@
 namespace nts {
     class graph {
     public:
-        typedef void (graph::*fnc_ptr)(std::string);
-        typedef std::map<std::string, fnc_ptr> map_t;
         enum Type {
             INPUTS,
             OUTPUTS,
@@ -37,10 +35,10 @@ namespace nts {
         //void displayGraph();
 
     private:
-        void sepParse(nts::Parser parse);
-        void sepInputs(std::string component);
-        void sepOutputs(std::string component);
-        void sepCircuit(std::string component);
+        void sepParse(nts::Line parse);
+//        void sepInputs(std::string component);
+//        void sepOutputs(std::string component);
+//        void sepCircuit(std::string component);
         component createComponent(std::string name, Type type);
         void createGraph(const std::string& componentOne,
                          const std::string& componentTwo);
@@ -54,7 +52,6 @@ namespace nts {
         CircuitFactory factory;
         bool is_link;
         bool is_chipset;
-        map_t _command_list;
     };
 }
 

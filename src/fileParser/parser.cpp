@@ -1,42 +1,54 @@
 /*
 ** EPITECH PROJECT, 2021
-** parser.cpp.cc
+** bootstrap
 ** File description:
-** parser.cpp.cc
+** Created by aespejo,
 */
-
 #include "include/fileParser/parser.hpp"
 
-nts::Parser::Parser(std::string &line) : _line(line)
+void Parser::readfile(const std::string &filename)
 {
-    removeComment();
-    sepSpaces();
-}
-
-void nts::Parser::removeComment()
-{
-    auto it{ std::find_if(_line.begin(), _line.end(), [](char c) {
-        return c == '#';
-    }) };
-
-    _line.erase(it, _line.end());
-}
-
-void nts::Parser::sepSpaces()
-{
-    _components.clear();
-
-    std::stringstream ss{ _line };
-    std::string sep;
-
-    while (std::getline(ss, sep, ' ')) {
-        if (!sep.empty()) {
-            _components.push_back(sep);
-        }
+    std::ifstream infile(filename);
+    std::string line;
+    while (std::getline(infile, line)) {
+        if (check_comment(line))
+            continue;
+        if (check_chipset(line))
+            parse_chipset(&infile);
     }
 }
 
-std::vector<std::string> nts::Parser::getComponents()
+bool Parser::check_comment(const std::string &str)
 {
-    return _components;
+    return str[0] == '#';
+}
+
+bool Parser::check_chipset(const std::string &str)
+{
+    return str == ".chipsets:";
+}
+
+void Parser::parse_chipset(std::ifstream *infile)
+{
+    std::string line;
+    while (std::getline(*infile, line)) {
+        if (line[0] == '.')
+            return;
+        remove_extra_space(&line);
+        std::cout << line << std::endl;
+        _instructions.push_back(line);
+    }
+}
+
+void Parser::clean_str(std::string *str)
+{
+    str->erase(remove_if(str->begin(), str->end(), isspace), str->end());
+}
+
+void Parser::remove_extra_space(std::string *input)
+{
+    std::string output;
+    unique_copy (input->begin(), input->end(), std::back_insert_iterator<std::string>(output),
+            [](char a,char b){ return isspace(a) && isspace(b);});
+    *input = output;
 }

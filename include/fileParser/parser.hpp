@@ -1,30 +1,29 @@
 /*
 ** EPITECH PROJECT, 2021
-** parser.hpp.h
+** bootstrap
 ** File description:
-** parser.hpp.h
+** Created by aespejo,
 */
-#ifndef NANOTEKSPICE_PARSER_HPP
-#define NANOTEKSPICE_PARSER_HPP
+#ifndef BOOTSTRAP_PARSER_HPP
+#define BOOTSTRAP_PARSER_HPP
 
+#include <istream>
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include <algorithm>
 #include <vector>
-#include <sstream>
-#include "pin.hpp"
 
-namespace nts {
-    class Parser {
+class Parser {
     public:
-        Parser(std::string &line);
-        void removeComment();
-        void sepSpaces();
-        std::vector<std::string> getComponents();
-
+        void readfile(std::string const &filename);
     private:
-        std::string &_line;
-        std::vector<std::string> _components;
-    };
-}
+        void clean_str(std::string *);
+        bool check_comment(std::string const&);
+        bool check_chipset(std::string const&);
+        void parse_chipset(std::ifstream*);
+        void remove_extra_space(std::string *input);
+        std::vector<std::string> _instructions;
+};
 
-#endif //NANOTEKSPICE_PARSER_HPP
+#endif //BOOTSTRAP_PARSER_HPP
