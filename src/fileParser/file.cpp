@@ -16,7 +16,6 @@ nts::File::File(std::string filepath)
 
     if (!file.is_open())
         throw nts::fileException("File not opened");
-        //std::cout << "Could not open File";
     std::stringstream buffer;
     buffer << file.rdbuf();
     _lines = buffer.str();

@@ -32,6 +32,8 @@ namespace nts {
         };
         explicit graph(nts::File *file);
         ~graph() = default;
+
+        std::vector<std::vector<IComponent*>> _graph;
         //void displayGraph();
 
     private:
@@ -48,7 +50,6 @@ namespace nts {
         IComponent * getComponent(std::string name);
         std::vector<IComponent*> _components;
         //std::vector<component> _components;
-        std::vector<std::vector<IComponent*>> _graph;
         CircuitFactory factory;
         bool is_link;
         bool is_chipset;

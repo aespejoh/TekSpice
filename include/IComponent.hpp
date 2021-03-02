@@ -31,6 +31,7 @@ namespace nts {
         private:
             std::string _type;
             std::string _name;
+            nts::Tristate _value;
     };
 }
 

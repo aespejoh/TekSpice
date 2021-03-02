@@ -1,33 +1,29 @@
 #include <iostream>
-#include "componentCreator.hpp"
-#include "c4081.hpp"
-#include "circuit.hpp"
-#include "circuitFactory.hpp"
 #include "core.hpp"
-#include "include/fileParser/parser.hpp"
 #include "graph.hpp"
 #include "exceptions/basicException.hpp"
+#include "execute/execute.hpp"
+#include "IComponent.hpp"
+#include "circuitFactory.hpp"
 
 int main(int ac, char **av)
 {
+    if (ac < 1)
+        return (84);
+    nts::execute exec;
+    std::string command;
 
-//    nts::Circuit circuit;
-//    nts::CircuitFactory factory;
-//    nts::IComponent *component;
-//    Line parser;
-//    component = factory.createComponent("input").release();
-//    circuit.addComponent(component);
-//    component = factory.createComponent("4001").release();
-//    component = factory.createComponent("4081").release();
-//    circuit.addComponent(component);
-//    Core core(ac, av);
-//    core.init();
-
+    try {
         nts::File file(av[1]);
         nts::graph graph(&file);
-    try {
+        while (!exec.getEnd()) {
+            std::cout << "> ";
+            std::cin >> command;
+            std::cout << command << std::endl;
+            exec.checkCommand(command, &graph);
+        }
     } catch (nts::basicException exception) {
-        std::cout << "An exception:" << exception.what() << std::endl;
+        std::cout << "An exception: " << exception.what() << std::endl;
     }
     return 0;
 }

@@ -7,6 +7,7 @@
 #ifndef EXECUTE_HPP
 #define EXECUTE_HPP
 
+#include "graph.hpp"
 #include <map>
 
 namespace nts {
@@ -23,6 +24,9 @@ namespace nts {
         void exit();
         void display();
         void dump();
+
+        void changeValue(const std::string& command, graph *);
+        void checkCommand(const std::string &command, nts::graph *graph);
 
         typedef void (nts::execute::*fnc_ptr)();
         typedef std::map<std::string, fnc_ptr> map_t;
