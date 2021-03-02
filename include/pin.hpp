@@ -7,7 +7,7 @@
 #ifndef BOOTSTRAP_PIN_HPP
 #define BOOTSTRAP_PIN_HPP
 
-#include "IComponent.hpp"
+#include "Tristate.hpp"
 
 namespace nts {
     class Pin {
@@ -17,17 +17,16 @@ namespace nts {
             I,
             O
         };
-            Pin(Type, Tristate, IComponent*);
+            Pin(Type, Tristate);
             Pin();
             ~Pin() = default;
-            void setComponent(IComponent&);
-            void setState(Tristate);
             Type getType() const;
             void setType(Type type);
+            Tristate getState();
+            void setState(Tristate);
         private:
             Type _type;
             Tristate _state;
-            IComponent *_component;
     };
 }
 #endif //BOOTSTRAP_PIN_HPP

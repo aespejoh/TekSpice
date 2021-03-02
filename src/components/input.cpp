@@ -10,13 +10,11 @@
 nts::Input::Input()
 {
     ComponentCreator creator;
-    _map = creator.create_map_chipset("nts/input.nts", this);
+    _map = creator.create_map_chipset("nts/input.nts");
     this->setType("input");
 }
 
-nts::Input::~Input()
-{
-}
+nts::Input::~Input() {}
 
 void nts::Input::simulate(std::size_t tick)
 {

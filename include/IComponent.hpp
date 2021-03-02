@@ -9,16 +9,13 @@
 
 #include <iostream>
 #include <memory>
+#include "Tristate.hpp"
+#include "pinMap.hpp"
 
 namespace nts {
-    enum Tristate {
-        UNDEFINED = (-true),
-        TRUE = true,
-        FALSE = false
-    };
-
     class IComponent {
         public:
+        PinMap *getMap();
         ~IComponent() = default;
         virtual void simulate(std::size_t tick) = 0;
         virtual nts::Tristate compute(std::size_t pin) = 0;
@@ -28,10 +25,13 @@ namespace nts {
         virtual void setType(const std::string &type) {_type = type;};
         virtual void setName(const std::string &name) {_name = name;};
         const std::string &getName() const {return _name;}
-        private:
+        Tristate getValue() const;
+        void setValue(Tristate value);
+    private:
             std::string _type;
             std::string _name;
             nts::Tristate _value;
+            PinMap _map;
     };
 }
 

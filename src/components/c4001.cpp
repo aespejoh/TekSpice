@@ -9,7 +9,7 @@
 nts::C4001::C4001()
 {
     ComponentCreator creator;
-    _map = creator.create_map_chipset("nts/4001.nts", this);
+    _map = creator.create_map_chipset("nts/4001.nts");
 }
 
 nts::C4001::~C4001()

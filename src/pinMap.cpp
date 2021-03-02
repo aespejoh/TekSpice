@@ -21,9 +21,9 @@ const std::vector<nts::Pin> &nts::PinMap::getPins() const
     return _pins;
 }
 
-void nts::PinMap::addPin(nts::Pin::Type type, nts::Tristate state, nts::IComponent *component)
+void nts::PinMap::addPin(nts::Pin::Type type, nts::Tristate state)
 {
-    Pin pin(type, state, component);
+    Pin pin(type, state);
     _pins.push_back(pin);
     n_pin++;
 }

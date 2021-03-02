@@ -85,12 +85,26 @@ void nts::graph::createGraph(const std::string& componentOne,
     std::string nameTwo = getName(componentTwo);
 
     IComponent *firstComponent = getComponent(nameOne);
+    if (firstComponent == nullptr)
+        throw ;
     IComponent *secondComponent = getComponent(nameTwo);
+    if(secondComponent == nullptr)
+        throw ;
 
     tmp.push_back(firstComponent);
     tmp.push_back(secondComponent);
 
     _graph.push_back(tmp);
+}
+
+nts::Tristate nts::graph::getState()
+{
+    return nts::UNDEFINED;
+}
+
+void nts::graph::setState(nts::Tristate state, std::string name)
+{
+    nts::IComponent *component = getComponent(name);
 }
 
 /*void nts::graph::setValue(std::string component)
@@ -137,4 +151,8 @@ nts::graph::component nts::graph::createComponent(std::string name, Type type)
     component.type = type;
     component.value = UNDEFINED;
     return component;
+}
+
+const std::vector<nts::IComponent*> &nts::graph::getComponents() const {
+    return _components;
 }

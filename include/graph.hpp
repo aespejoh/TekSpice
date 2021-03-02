@@ -34,7 +34,11 @@ namespace nts {
         ~graph() = default;
 
         std::vector<std::vector<IComponent*>> _graph;
+
+        void setState(Tristate, std::string);
+        Tristate getState();
         //void displayGraph();
+        const std::vector<IComponent *> &getComponents() const;
 
     private:
         void sepParse(nts::Line parse);

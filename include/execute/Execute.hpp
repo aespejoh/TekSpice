@@ -1,34 +1,35 @@
 /*
 ** EPITECH PROJECT, 2021
-** execute.hpp.h
+** Execute.hpp.h
 ** File description:
-** execute.hpp.h
+** Execute.hpp.h
 */
 #ifndef EXECUTE_HPP
 #define EXECUTE_HPP
 
 #include "graph.hpp"
 #include <map>
+#include <algorithm>
 
 namespace nts {
-    class execute {
+    class Execute {
     public:
-        execute();
-        ~execute();
+        Execute();
+        ~Execute();
 
         bool getEnd();
 
-        void exec(const std::string &type);
+        void exec(std::string &type);
 
         void simulate();
         void exit();
         void display();
         void dump();
 
-        void changeValue(const std::string& command, graph *);
-        void checkCommand(const std::string &command, nts::graph *graph);
+        void changeValue(std::string& command, graph *);
+        void checkCommand(std::string &command, nts::graph *graph);
 
-        typedef void (nts::execute::*fnc_ptr)();
+        typedef void (nts::Execute::*fnc_ptr)();
         typedef std::map<std::string, fnc_ptr> map_t;
 
     private:

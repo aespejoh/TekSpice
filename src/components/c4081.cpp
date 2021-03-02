@@ -29,7 +29,7 @@ void nts::C4081::dump() const
 nts::C4081::C4081()
 {
     ComponentCreator creator;
-    _map = creator.create_map_chipset("nts/4081.nts", this);
+    _map = creator.create_map_chipset("nts/4081.nts");
 }
 
 nts::C4081::~C4081()

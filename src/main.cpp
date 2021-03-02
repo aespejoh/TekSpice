@@ -2,7 +2,7 @@
 #include "core.hpp"
 #include "graph.hpp"
 #include "exceptions/basicException.hpp"
-#include "execute/execute.hpp"
+#include "execute/Execute.hpp"
 #include "IComponent.hpp"
 #include "circuitFactory.hpp"
 
@@ -10,7 +10,7 @@ int main(int ac, char **av)
 {
     if (ac < 1)
         return (84);
-    nts::execute exec;
+    nts::Execute exec;
     std::string command;
 
     try {
@@ -19,7 +19,7 @@ int main(int ac, char **av)
         while (!exec.getEnd()) {
             std::cout << "> ";
             std::cin >> command;
-            std::cout << command << std::endl;
+            //std::cout << command << std::endl;
             exec.checkCommand(command, &graph);
         }
     } catch (nts::basicException exception) {

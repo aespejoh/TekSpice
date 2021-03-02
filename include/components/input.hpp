@@ -20,8 +20,8 @@ namespace nts {
             void setLink(std::size_t pin, IComponent &other, std::size_t otherPin
             ) override;
             void dump() const override;
-        private:
             PinMap _map;
+
     };
 }
 
