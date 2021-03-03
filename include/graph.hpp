@@ -34,7 +34,7 @@ namespace nts {
         ~graph() = default;
 
         std::vector<std::vector<IComponent*>> _graph;
-
+        std::vector<std::vector<Pin*>> _pin_graph;
         void setState(Tristate, std::string);
         Tristate getState();
         //void displayGraph();
@@ -49,6 +49,7 @@ namespace nts {
         void createGraph(const std::string& componentOne,
                          const std::string& componentTwo);
         void setValue(std::string component);
+        int getInt(std::string component);
         std::string getName(std::string component);
         int getValue(std::string component);
         IComponent * getComponent(std::string name);

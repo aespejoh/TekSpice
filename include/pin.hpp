@@ -10,6 +10,7 @@
 #include "Tristate.hpp"
 
 namespace nts {
+    class IComponent;
     class Pin {
         public:
         enum Type {
@@ -18,6 +19,7 @@ namespace nts {
             O
         };
             Pin(Type, Tristate);
+            Pin(Type, Tristate, IComponent*);
             Pin();
             ~Pin() = default;
             Type getType() const;
@@ -25,6 +27,7 @@ namespace nts {
             Tristate getState();
             void setState(Tristate);
         private:
+            IComponent* _component;
             Type _type;
             Tristate _state;
     };

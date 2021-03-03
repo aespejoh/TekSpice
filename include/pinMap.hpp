@@ -16,8 +16,9 @@ namespace nts {
             PinMap();
             ~PinMap() = default;
             const std::vector<Pin> &getPins() const;
-            void addPin(Pin::Type, Tristate);
-            int getNPin() const;
+            void addPin(Pin::Type, Tristate, IComponent*);
+            int get_number_pin() const;
+            Pin* getpin_N(int n);
         private:
             std::vector<Pin> _pins;
             int n_pin;

@@ -31,9 +31,15 @@ nts::Pin::Pin()
 {
     _type = U;
     _state = nts::UNDEFINED;
+    _component = nullptr;
 }
 
 nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state) : _state(state), _type(type)
 {
+    _component = nullptr;
+}
 
+nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state, nts::IComponent *component) :
+_state(state), _type(type), _component(component)
+{
 }

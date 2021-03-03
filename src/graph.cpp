@@ -79,21 +79,24 @@ void nts::graph::createGraph(const std::string& componentOne,
                              const std::string& componentTwo)
 {
     std::vector<IComponent*> tmp;
+    std::vector<Pin*> pin_tmp;
     //setValue(componentOne);
     //setValue(componentTwo);
     std::string nameOne = getName(componentOne);
     std::string nameTwo = getName(componentTwo);
-
+    int pin1 = getInt(componentOne);
+    int pin2 = getInt(componentTwo);
     IComponent *firstComponent = getComponent(nameOne);
     if (firstComponent == nullptr)
         throw ;
     IComponent *secondComponent = getComponent(nameTwo);
     if(secondComponent == nullptr)
         throw ;
-
+    pin_tmp.push_back(firstComponent->getMap()->getpin_N(pin1));
+    pin_tmp.push_back(firstComponent->getMap()->getpin_N(pin2));
     tmp.push_back(firstComponent);
     tmp.push_back(secondComponent);
-
+    _pin_graph.push_back(pin_tmp);
     _graph.push_back(tmp);
 }
 
@@ -155,4 +158,12 @@ nts::graph::component nts::graph::createComponent(std::string name, Type type)
 
 const std::vector<nts::IComponent*> &nts::graph::getComponents() const {
     return _components;
+}
+
+int nts::graph::getInt(std::string component)
+{
+    size_t found = component.find(':');
+    std::string name = component.substr(found + 1, component.length());
+    int n = std::stoi(name);
+    return n;
 }
