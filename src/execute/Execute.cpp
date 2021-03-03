@@ -42,7 +42,9 @@ void nts::Execute::changeValue(std::string& command, graph *graph)
             elem = element;
     }
     auto p_map = elem->getMap();
-    p_map->getPins();
+    std::vector<Pin> pins = p_map->getPins();
+    std::cout << p_map->getPins().size() << std::endl;
+    std::cout << pins[1].getType() << std::endl;
     std::cout  << elem->getValue() << std::endl;
     if (command == "0")
         elem->setValue(FALSE);
