@@ -17,6 +17,7 @@ namespace nts {
         explicit File(std::string filepath);
 
         bool nextLine(std::string &line);
+        void checkExtension(std::string filepath);
     private:
         std::string _filepath;
         std::string _lines;

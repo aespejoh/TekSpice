@@ -18,12 +18,12 @@ int main(int ac, char **av)
         nts::graph graph(&file);
         while (!exec.getEnd()) {
             std::cout << "> ";
-            std::cin >> command;
-            //std::cout << command << std::endl;
+            //std::cin >> command;
+            getline(std::cin, command);
             exec.checkCommand(command, &graph);
         }
     } catch (nts::basicException exception) {
-        std::cout << "An exception: " << exception.what() << std::endl;
+        std::cout << "An exception has occurred: " << exception.what() << std::endl;
     }
     return 0;
 }
