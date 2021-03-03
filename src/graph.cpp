@@ -51,7 +51,7 @@ std::string nts::graph::getName(std::string component)
     return name;
 }
 
-int nts::graph::getValue(std::string component)
+/*int nts::graph::getValue(std::string component)
 {
     size_t found = component.find(':');
     std::string values = component.substr(found + 1);
@@ -59,7 +59,7 @@ int nts::graph::getValue(std::string component)
     std::stringstream _value(values);
     _value >> value;
     return (value);
-}
+}*/
 
 nts::IComponent * nts::graph::getComponent(std::string name)
 {
@@ -93,22 +93,19 @@ void nts::graph::createGraph(const std::string& componentOne,
     if(secondComponent == nullptr)
         throw ;
     pin_tmp.push_back(firstComponent->getMap()->getpin_N(pin1));
-    pin_tmp.push_back(firstComponent->getMap()->getpin_N(pin2));
+    pin_tmp.push_back(secondComponent->getMap()->getpin_N(pin2));
     tmp.push_back(firstComponent);
     tmp.push_back(secondComponent);
     _pin_graph.push_back(pin_tmp);
     _graph.push_back(tmp);
 }
 
-nts::Tristate nts::graph::getState()
-{
-    return nts::UNDEFINED;
-}
-
+/*
 void nts::graph::setState(nts::Tristate state, std::string name)
 {
     nts::IComponent *component = getComponent(name);
 }
+*/
 
 /*void nts::graph::setValue(std::string component)
 {
@@ -146,18 +143,8 @@ void nts::graph::sepCircuit(std::string component)
 }
 */
 
-nts::graph::component nts::graph::createComponent(std::string name, Type type)
-{
-    component component;
-
-    component.name = name;
-    component.type = type;
-    component.value = UNDEFINED;
-    return component;
-}
-
-const std::vector<nts::IComponent*> &nts::graph::getComponents() const {
-    return _components;
+std::vector<nts::IComponent*> * nts::graph::getComponents() {
+    return &_components;
 }
 
 int nts::graph::getInt(std::string component)
@@ -166,4 +153,14 @@ int nts::graph::getInt(std::string component)
     std::string name = component.substr(found + 1, component.length());
     int n = std::stoi(name);
     return n;
+}
+
+std::vector<std::vector<nts::IComponent*>> * nts::graph::getGraph()
+{
+    return &_graph;
+}
+
+std::vector<std::vector<nts::Pin *>> * nts::graph::getPinGraph()
+{
+    return &_pin_graph;
 }

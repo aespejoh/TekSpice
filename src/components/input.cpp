@@ -25,12 +25,16 @@ nts::Tristate nts::Input::compute(std::size_t pin)
     return nts::FALSE;
 }
 
-void nts::Input::setLink(std::size_t pin, nts::IComponent &other,
+void nts::Input::setLink(std::size_t pin, IComponent *other,
     std::size_t otherPin
 )
 {
 }
 
 void nts::Input::dump() const
+{
+}
+
+void nts::Input::setConnections(int pin1, int pin2, int outputPin)
 {
 }

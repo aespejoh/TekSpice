@@ -9,10 +9,11 @@
 #include "include/execute/Execute.hpp"
 #include "include/exceptions/executeException.hpp"
 
-nts::Execute::Execute() : _end{false}, _tick{0}
+nts::Execute::Execute(nts::graph *graph) : _graph(graph), _end{false}, _tick{0}
 {
     _execution.insert(std::make_pair("simulate", &nts::Execute::simulate));
     _execution.insert(std::make_pair("exit", &nts::Execute::exit));
+    _execution.insert(std::make_pair("display", &nts::Execute::display));
 }
 
 nts::Execute::~Execute() {}
@@ -37,21 +38,19 @@ void nts::Execute::changeValue(std::string& command, graph *graph)
     command.erase(0, pos + 1);
 
     IComponent *elem = nullptr;
-    for (auto &element : graph->getComponents()) {
+    for (auto &element : *graph->getComponents()) {
         if (element->getName() == token)
             elem = element;
     }
-    auto p_map = elem->getMap();
-    std::vector<Pin> pins = p_map->getPins();
-    std::cout << p_map->getPins().size() << std::endl;
-    std::cout << pins[1].getType() << std::endl;
-    std::cout  << elem->getValue() << std::endl;
+    if (elem == nullptr)
+        return;
+    Pin *pin = elem->getMap()->getpin_N(1);
     if (command == "0")
-        elem->setValue(FALSE);
+        pin->setState(FALSE);
     else if (command == "1")
-        elem->setValue(TRUE);
+        pin->setState(TRUE);
     else
-        elem->setValue(UNDEFINED);
+        pin->setState(UNDEFINED);
 }
 
 void nts::Execute::exec(std::string &type)
@@ -70,7 +69,15 @@ bool nts::Execute::getEnd()
 void nts::Execute::simulate()
 {
     _tick += 1;
+    IComponent *elem;
+    for (auto &element : *_graph->getComponents()) {
+        if (element->getType() == "output")
+            elem = element;
+    }
     std::cout << "Tick == " << _tick << std::endl;
+
+
+
 }
 
 void nts::Execute::exit()
@@ -80,7 +87,12 @@ void nts::Execute::exit()
 
 void nts::Execute::display()
 {
-
+    std::cout << "tick: " << _tick << std::endl;
+    std::cout << "input(s):" << std::endl;
+    for (auto &element : *_graph->getComponents()) {
+        if (element->getType() == "input")
+            std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
+    }
 }
 
 void nts::Execute::dump()

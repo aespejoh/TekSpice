@@ -39,7 +39,23 @@ nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state) : _state(state), _type(t
     _component = nullptr;
 }
 
-nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state, nts::IComponent *component) :
-_state(state), _type(type), _component(component)
+std::string nts::Pin::getPrintState()
 {
+    if (_state == UNDEFINED)
+        return "U";
+    else if (_state == FALSE)
+        return "0";
+    else
+        return "1";
+}
+
+nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state, nts::IComponent *component, int n)
+: _state(state), _type(type), _component(component), _n(n+1)
+{
+
+}
+
+int nts::Pin::getN() const
+{
+    return _n;
 }

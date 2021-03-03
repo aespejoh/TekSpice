@@ -10,12 +10,12 @@ int main(int ac, char **av)
 {
     if (ac < 1)
         return (84);
-    nts::Execute exec;
     std::string command;
 
     try {
         nts::File file(av[1]);
         nts::graph graph(&file);
+        nts::Execute exec(&graph);
         while (!exec.getEnd()) {
             std::cout << "> ";
             std::cin >> command;

@@ -16,14 +16,14 @@ int nts::PinMap::get_number_pin() const
     return n_pin;
 }
 
-const std::vector<nts::Pin> &nts::PinMap::getPins() const
+std::vector<nts::Pin> * nts::PinMap::getPins()
 {
-    return _pins;
+    return &_pins;
 }
 
 void nts::PinMap::addPin(nts::Pin::Type type, nts::Tristate state, nts::IComponent* component)
 {
-    Pin pin(type, state, component);
+    Pin pin(type, state, component, n_pin);
     _pins.push_back(pin);
     n_pin++;
 }

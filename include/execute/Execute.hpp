@@ -14,7 +14,7 @@
 namespace nts {
     class Execute {
     public:
-        Execute();
+        explicit Execute(graph *graph);
         ~Execute();
 
         bool getEnd();
@@ -33,6 +33,7 @@ namespace nts {
         typedef std::map<std::string, fnc_ptr> map_t;
 
     private:
+        graph *_graph;
         map_t _execution;
         int _tick;
         bool _end;
