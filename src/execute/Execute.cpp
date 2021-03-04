@@ -32,7 +32,7 @@ void nts::Execute::changeValue(std::string& command, graph *graph)
 
     size_t pos = 0;
     std::string token;
-    pos = command.find("=");
+    pos = command.find('=');
     token = command.substr(0, pos);
     command.erase(0, pos + 1);
 
@@ -41,8 +41,14 @@ void nts::Execute::changeValue(std::string& command, graph *graph)
         if (element->getName() == token)
             elem = element;
     }
-    if (elem == nullptr)
+    if (elem == nullptr) {
+        std::cout << "Component '" << token << "' not found" << std::endl;
         return;
+    }
+    if (elem->getType() != "input" && elem->getType() != "clock") {
+        std::cout << "Component '" << token << "' it is nether an input nor a clock" << std::endl;
+        return;
+    }
     Pin *pin = elem->getMap()->getpin_N(1);
     if (command == "0")
         pin->setState(FALSE);
@@ -55,8 +61,10 @@ void nts::Execute::changeValue(std::string& command, graph *graph)
 void nts::Execute::exec(std::string &type)
 {
     auto it = _execution.find(type);
-    if (it == _execution.end())
-        throw nts::executeException("Command not found");
+    if (it == _execution.end()) {
+        std::cout << type << ": command not found" << std::endl;
+        return;
+    }
     (this->*it->second)();
 }
 

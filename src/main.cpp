@@ -18,7 +18,6 @@ int main(int ac, char **av)
         nts::Execute exec(&graph);
         while (!exec.getEnd()) {
             std::cout << "> ";
-            //std::cin >> command;
             getline(std::cin, command);
             if (std::cin.eof())
                 exec.exit();

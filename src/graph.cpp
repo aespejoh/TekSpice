@@ -5,6 +5,7 @@
 ** graph.cpp.cc
 */
 
+#include "exceptions/ComponentException.hpp"
 #include "graph.hpp"
 
 nts::graph::graph(nts::File *file)
@@ -31,7 +32,7 @@ void nts::graph::sepParse(nts::Line parse)
     if (is_chipset) {
         IComponent *component = factory.createComponent(parse.getComponents()[0]).release();
         if (component == nullptr) //exception if fails create component
-            return;
+            throw nts::ComponentException("Component not created correctly");
         component->setName(parse.getComponents()[1]);
         _components.push_back(component);
         component = nullptr;
@@ -88,10 +89,10 @@ void nts::graph::createGraph(const std::string& componentOne,
     int pin2 = getInt(componentTwo);
     IComponent *firstComponent = getComponent(nameOne);
     if (firstComponent == nullptr) //exceptions if getcomponent fails
-        throw ;
+        throw nts::ComponentException("Component " + nameOne + " not found");
     IComponent *secondComponent = getComponent(nameTwo);
     if (secondComponent == nullptr) //exceptions if getcomponent fails
-        throw ;
+        throw nts::ComponentException("Component " + nameTwo + " not found");
     pin_tmp.push_back(firstComponent->getMap()->getpin_N(pin1));
     pin_tmp.push_back(secondComponent->getMap()->getpin_N(pin2));
     tmp.push_back(firstComponent);
