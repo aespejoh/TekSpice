@@ -30,7 +30,7 @@ void nts::graph::sepParse(nts::Line parse)
         return;
     if (is_chipset) {
         IComponent *component = factory.createComponent(parse.getComponents()[0]).release();
-        if (component == nullptr)
+        if (component == nullptr) //exception if fails create component
             return;
         component->setName(parse.getComponents()[1]);
         _components.push_back(component);
@@ -87,10 +87,10 @@ void nts::graph::createGraph(const std::string& componentOne,
     int pin1 = getInt(componentOne);
     int pin2 = getInt(componentTwo);
     IComponent *firstComponent = getComponent(nameOne);
-    if (firstComponent == nullptr)
+    if (firstComponent == nullptr) //exceptions if getcomponent fails
         throw ;
     IComponent *secondComponent = getComponent(nameTwo);
-    if(secondComponent == nullptr)
+    if (secondComponent == nullptr) //exceptions if getcomponent fails
         throw ;
     pin_tmp.push_back(firstComponent->getMap()->getpin_N(pin1));
     pin_tmp.push_back(secondComponent->getMap()->getpin_N(pin2));

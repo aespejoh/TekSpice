@@ -74,14 +74,15 @@ void nts::Execute::simulate()
     Pin *pin;
     Pin *pin1;
     Pin *pin2;
-    for (auto &element : *_graph->getComponents())
+    for (auto &element : *_graph->getComponents()) {
         if (element->getType() == "output")
             pin = element->getMap()->getpin_N(1);
-    for (auto &element : *_graph->getPinGraph()) {
-        auto i = std::find(element.begin(), element.end(), pin);
-        if (i != element.end()) {
-            pin1 = element[0];
-            pin2 = element[1];
+        for (auto &el : *_graph->getPinGraph()) {
+            auto i = std::find(el.begin(), el.end(), pin);
+            if (i != el.end()) {
+                pin1 = el[0];
+                pin2 = el[1];
+            }
         }
     }
     if (pin1->getComponent()->getType() == "output")
