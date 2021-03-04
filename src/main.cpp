@@ -20,7 +20,10 @@ int main(int ac, char **av)
             std::cout << "> ";
             //std::cin >> command;
             getline(std::cin, command);
-            exec.checkCommand(command, &graph);
+            if (std::cin.eof())
+                exec.exit();
+            else
+                exec.checkCommand(command, &graph);
         }
     } catch (nts::basicException exception) {
         std::cout << "An exception has occurred: " << exception.what() << std::endl;

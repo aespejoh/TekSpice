@@ -20,7 +20,6 @@ nts::Execute::~Execute() {}
 
 void nts::Execute::checkCommand(std::string &command, nts::graph *graph)
 {
-
     if (command.find('=') != std::string::npos)
         changeValue(command, graph);
     else
