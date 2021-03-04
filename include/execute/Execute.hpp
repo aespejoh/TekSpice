@@ -25,7 +25,7 @@ namespace nts {
         void exit();
         void display();
         void dump();
-
+        void update();
         void changeValue(std::string& command, graph *);
         void checkCommand(std::string &command, nts::graph *graph);
 

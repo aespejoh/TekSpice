@@ -68,16 +68,26 @@ bool nts::Execute::getEnd()
 
 void nts::Execute::simulate()
 {
-    _tick += 1;
+    update();
+    _tick++;
     IComponent *elem;
-    for (auto &element : *_graph->getComponents()) {
+    Pin *pin;
+    Pin *pin1;
+    Pin *pin2;
+    for (auto &element : *_graph->getComponents())
         if (element->getType() == "output")
-            elem = element;
+            pin = element->getMap()->getpin_N(1);
+    for (auto &element : *_graph->getPinGraph()) {
+        auto i = std::find(element.begin(), element.end(), pin);
+        if (i != element.end()) {
+            pin1 = element[0];
+            pin2 = element[1];
+        }
     }
-    std::cout << "Tick == " << _tick << std::endl;
-
-
-
+    if (pin1->getComponent()->getType() == "output")
+        pin1->setState(pin2->getComponent()->compute(pin2->getN()));
+    else if (pin2->getComponent()->getType() == "output")
+        pin2->setState(pin1->getComponent()->compute(pin1->getN()));
 }
 
 void nts::Execute::exit()
@@ -93,9 +103,22 @@ void nts::Execute::display()
         if (element->getType() == "input")
             std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
     }
+    std::cout << "output(s):" << std::endl;
+    for (auto &element : *_graph->getComponents()) {
+        if (element->getType() == "output")
+            std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
+    }
 }
 
 void nts::Execute::dump()
 {
 
+}
+
+void nts::Execute::update()
+{
+    for (auto &i : *_graph->getPinGraph()) {
+        if (i[0]->getState() != UNDEFINED)
+            i[1]->setState(i[0]->getState());
+    }
 }

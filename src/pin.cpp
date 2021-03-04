@@ -32,11 +32,13 @@ nts::Pin::Pin()
     _type = U;
     _state = nts::UNDEFINED;
     _component = nullptr;
+    _n = 1;
 }
 
 nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state) : _state(state), _type(type)
 {
     _component = nullptr;
+    _n = 1;
 }
 
 std::string nts::Pin::getPrintState()
@@ -58,4 +60,20 @@ nts::Pin::Pin(nts::Pin::Type type, nts::Tristate state, nts::IComponent *compone
 int nts::Pin::getN() const
 {
     return _n;
+}
+
+nts::IComponent *nts::Pin::getComponent()
+{
+    return _component;
+}
+
+bool nts::Pin::operator==(const nts::Pin &rhs) const
+{
+    return _component == rhs._component && _type == rhs._type &&
+        _state == rhs._state && _n == rhs._n;
+}
+
+bool nts::Pin::operator!=(const nts::Pin &rhs) const
+{
+    return !(rhs == *this);
 }

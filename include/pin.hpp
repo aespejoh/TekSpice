@@ -29,6 +29,11 @@ namespace nts {
             void setState(Tristate);
             std::string getPrintState();
             int getN() const;
+            IComponent *getComponent();
+
+        bool operator==(const Pin &rhs) const;
+
+        bool operator!=(const Pin &rhs) const;
 
         private:
         IComponent* _component;
