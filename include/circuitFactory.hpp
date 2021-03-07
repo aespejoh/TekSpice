@@ -10,6 +10,9 @@
 #include "IComponent.hpp"
 #include "c4081.hpp"
 #include "c4001.hpp"
+#include "c4030.hpp"
+#include "c4069.hpp"
+#include "c4071.hpp"
 #include "input.hpp"
 #include "output.hpp"
 #include "clock.hpp"
@@ -29,6 +32,10 @@ namespace nts {
             std::unique_ptr<nts::IComponent> createInput();
             std::unique_ptr<nts::IComponent> createOutput();
             std::unique_ptr<nts::IComponent> createClock();
+            std::unique_ptr<nts::IComponent> create4030();
+            std::unique_ptr<nts::IComponent> create4069();
+            std::unique_ptr<nts::IComponent> create4071();
+
     };
 }
 #endif //BOOTSTRAP_CIRCUITFACTORY_HPP

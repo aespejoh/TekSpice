@@ -34,17 +34,17 @@ nts::Tristate or_gate(nts::Tristate state1, nts::Tristate state2)
     return nts::FALSE;
 }
 
-nts::Tristate Nand(nts::Tristate state1, nts::Tristate state2)
+nts::Tristate Nand_gate(nts::Tristate state1, nts::Tristate state2)
 {
     return Not(and_gate(state1,state2));
 }
 
-nts::Tristate Nor(nts::Tristate state1, nts::Tristate state2)
+nts::Tristate Nor_gate(nts::Tristate state1, nts::Tristate state2)
 {
     return Not(or_gate(state1,state2));
 }
 
-nts::Tristate Xor(nts::Tristate state1, nts::Tristate state2)
+nts::Tristate Xor_gate(nts::Tristate state1, nts::Tristate state2)
 {
     if (state1 == nts::UNDEFINED || state2 == nts::UNDEFINED)
         return nts::UNDEFINED;
@@ -53,7 +53,7 @@ nts::Tristate Xor(nts::Tristate state1, nts::Tristate state2)
     return nts::FALSE;
 }
 
-nts::Tristate Xnor(nts::Tristate state1, nts::Tristate state2)
+nts::Tristate Xnor_gate(nts::Tristate state1, nts::Tristate state2)
 {
-    return Not(Xor(state1,state2));
+    return Not(Xor_gate(state1,state2));
 }

@@ -1,13 +1,13 @@
 /*
 ** EPITECH PROJECT, 2021
-** bootstrap
+** nanoTekSpice
 ** File description:
 ** Created by aespejo,
 */
-#include "include/components/c4001.hpp"
+#include "c4030.hpp"
 #include "logic.hpp"
 
-nts::C4001::C4001()
+nts::C4030::C4030()
 {
     _map.addPin(Pin::I, UNDEFINED, this); //1
     _map.addPin(Pin::I, UNDEFINED, this); //2
@@ -24,19 +24,20 @@ nts::C4001::C4001()
     _map.addPin(Pin::I, UNDEFINED, this); //13
     setConnections(1,2,3);
     setConnections(5,6,4);
-    setConnections(12,13,11);
+    setConnections(13,12,11);
     setConnections(9,8,10);
+
 }
 
-nts::C4001::~C4001()
+nts::C4030::~C4030()
 {
 }
 
-void nts::C4001::simulate(std::size_t tick)
+void nts::C4030::simulate(std::size_t tick)
 {
 }
 
-nts::Tristate nts::C4001::compute(std::size_t pin)
+nts::Tristate nts::C4030::compute(std::size_t pin)
 {
     Pin *p = _map.getpin_N(pin);
     Pin *input1;
@@ -50,28 +51,27 @@ nts::Tristate nts::C4001::compute(std::size_t pin)
                 }
             }
         }
-        return Nor_gate(input1->getState(), input2->getState());
+        return Xor_gate(input1->getState(), input2->getState());
     }
     else
         return p->getState();
 }
 
-void nts::C4001::setLink(std::size_t pin, IComponent *other,
+void nts::C4030::setLink(std::size_t pin, nts::IComponent *other,
     std::size_t otherPin
 )
 {
-    //this->_links.insert(std::make_pair(_map.getpin_N(pin), other->getMap()->getpin_N(otherPin)));
 }
 
-void nts::C4001::dump() const
-{
-}
-
-void nts::C4001::setConnections(int pin1, int pin2, int outputPin)
+void nts::C4030::setConnections(int pin1, int pin2, int outputPin)
 {
     std::vector<Pin*> tmp;
     tmp.push_back(_map.getpin_N(pin1));
     tmp.push_back(_map.getpin_N(pin2));
     tmp.push_back(_map.getpin_N(outputPin));
     _links.push_back(tmp);
+}
+
+void nts::C4030::dump() const
+{
 }
