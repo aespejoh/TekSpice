@@ -20,7 +20,7 @@ namespace nts {
             Tristate compute(std::size_t pin) override;
             void setLink(std::size_t pin, IComponent *other, std::size_t otherPin) override;
             void setConnections(int pin1, int pin2, int outputPin) override;
-            void dump() const override;
+            void dump() override;
     };
 }
 #endif //BOOTSTRAP_C4001_HPP

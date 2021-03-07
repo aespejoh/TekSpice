@@ -72,8 +72,21 @@ void nts::C4030::setConnections(int pin1, int pin2, int outputPin)
     _links.push_back(tmp);
 }
 
-void nts::C4030::dump() const
+void nts::C4030::dump()
 {
     std::cout << "CIRCUIT 4030:" << std::endl;
-    std::cout << "\tname -> " << _name << std::endl << std::endl;
+    std::cout << "\tname -> " << _name << std::endl;
+    std::cout << "\tPINS:" << std::endl;
+    int size = getMap()->getPins()->size();
+    nts::Pin *pin = getMap()->getpin_N(1);
+    for (int i = 2; i <= size; i++) {
+        std::cout << "\t\tpin number -> " << pin->getN() << std::endl;
+        if (pin->getState() == nts::UNDEFINED)
+            std::cout << "\t\tstate of the input -> Undefined" << std::endl;
+        else if (pin->getState() == nts::TRUE)
+            std::cout << "\t\tstate of the input -> True" << std::endl;
+        else if (pin->getState() == nts::FALSE)
+            std::cout << "\t\tstate of the input -> False" << std::endl;
+        pin = getMap()->getpin_N(i);
+    }
 }

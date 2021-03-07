@@ -31,7 +31,7 @@ void nts::True::setLink(std::size_t pin, nts::IComponent *other,
 {
 }
 
-void nts::True::dump() const
+void nts::True::dump()
 {
     std::cout << "OUTPUT:" << std::endl;
     std::cout << "\tname -> " << _name << std::endl;

@@ -38,10 +38,23 @@ void nts::C4081::setLink(std::size_t pin, IComponent *other,
 {
 }
 
-void nts::C4081::dump() const
+void nts::C4081::dump()
 {
     std::cout << "CIRCUIT 4081:" << std::endl;
-    std::cout << "\tname -> " << _name << std::endl << std::endl;
+    std::cout << "\tname -> " << _name << std::endl;
+    std::cout << "\tPINS:" << std::endl;
+    int size = getMap()->getPins()->size();
+    nts::Pin *pin = getMap()->getpin_N(1);
+    for (int i = 2; i <= size; i++) {
+        std::cout << "\t\tpin number -> " << pin->getN() << std::endl;
+        if (pin->getState() == nts::UNDEFINED)
+            std::cout << "\t\tstate of the input -> Undefined" << std::endl;
+        else if (pin->getState() == nts::TRUE)
+            std::cout << "\t\tstate of the input -> True" << std::endl;
+        else if (pin->getState() == nts::FALSE)
+            std::cout << "\t\tstate of the input -> False" << std::endl;
+        pin = getMap()->getpin_N(i);
+    }
 }
 
 nts::C4081::C4081()

@@ -31,16 +31,17 @@ void nts::Clock::setLink(std::size_t pin, nts::IComponent *other,
 {
 }
 
-void nts::Clock::dump() const
+void nts::Clock::dump()
 {
     std::cout << "INPUT:" << std::endl;
     std::cout << "\tname -> " << _name << std::endl;
     std::cout << "\tstate of the input -> ";
-    if (getValue() == nts::UNDEFINED)
+    nts::Pin *pin = getMap()->getpin_N(1);
+    if (pin->getState() == nts::UNDEFINED)
         std::cout << "Undefined" << std::endl << std::endl;
-    else if (getValue() == nts::TRUE)
+    else if (pin->getState() == nts::TRUE)
         std::cout << "True" << std::endl << std::endl;
-    else if (getValue() == nts::FALSE)
+    else if (pin->getState() == nts::FALSE)
         std::cout << "False" << std::endl << std::endl;
 }
 
