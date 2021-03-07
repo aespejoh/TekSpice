@@ -7,7 +7,7 @@
 #include <sstream>
 #include "include/componentCreator.hpp"
 #include "IComponent.hpp"
-
+#include "fileException.hpp"
 
 void add_to_map(nts::PinMap *map, std::string name, std::string type, nts::IComponent *component)
 {
@@ -25,6 +25,8 @@ nts::PinMap nts::ComponentCreator::create_map_chipset(
 {
     PinMap map;
     std::ifstream infile(filename);
+    if (!infile.is_open())
+        throw nts::fileException("File " + filename + " does not exist");
     std::stringstream linestream;
     std::string line;
     std::string type, name;

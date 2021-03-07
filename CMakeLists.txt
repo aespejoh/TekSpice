@@ -4,6 +4,7 @@ project(nanoTekSpice)
 include_directories(.)
 include_directories(./include)
 include_directories(./include/components)
+include_directories(./include/exceptions)
 
 set(CMAKE_CXX_STANDARD 14)
 

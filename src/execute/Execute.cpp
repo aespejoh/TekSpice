@@ -44,6 +44,8 @@ void nts::Execute::changeValue(std::string& command, graph *graph)
     if (elem == nullptr)
         return;
     Pin *pin = elem->getMap()->getpin_N(1);
+    if (pin == nullptr) // no component found invalid component
+        return;
     if (command == "0")
         pin->setState(FALSE);
     else if (command == "1")
@@ -100,12 +102,12 @@ void nts::Execute::display()
     std::cout << "tick: " << _tick << std::endl;
     std::cout << "input(s):" << std::endl;
     for (auto &element : *_graph->getComponents()) {
-        if (element->getType() == "input")
+        if (element->getType() == "input" && !element->getMap()->getPins()->empty())
             std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
     }
     std::cout << "output(s):" << std::endl;
     for (auto &element : *_graph->getComponents()) {
-        if (element->getType() == "output")
+        if (element->getType() == "output" && !element->getMap()->getPins()->empty())
             std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
     }
 }
@@ -118,7 +120,8 @@ void nts::Execute::dump()
 void nts::Execute::update()
 {
     for (auto &i : *_graph->getPinGraph()) {
-        if (i[0]->getState() != UNDEFINED)
-            i[1]->setState(i[0]->getState());
+        if (i[0] != nullptr && i[1] != nullptr)
+            if (i[0]->getState() != UNDEFINED)
+                i[1]->setState(i[0]->getState());
     }
 }
