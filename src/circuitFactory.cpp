@@ -29,6 +29,8 @@ nts::CircuitFactory::CircuitFactory()
     _command_list.insert(std::make_pair("4030", &CircuitFactory::create4030));
     _command_list.insert(std::make_pair("4069", &CircuitFactory::create4069));
     _command_list.insert(std::make_pair("4071", &CircuitFactory::create4071));
+    _command_list.insert(std::make_pair("true", &CircuitFactory::createTrue));
+    _command_list.insert(std::make_pair("false", &CircuitFactory::createFalse));
 }
 
 std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4081()
@@ -71,4 +73,14 @@ std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4071()
 {
     return std::make_unique<C4071>();
 
+}
+
+std::unique_ptr<nts::IComponent> nts::CircuitFactory::createTrue()
+{
+    return std::make_unique<True>();
+}
+
+std::unique_ptr<nts::IComponent> nts::CircuitFactory::createFalse()
+{
+    return std::make_unique<False>();
 }
