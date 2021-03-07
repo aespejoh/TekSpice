@@ -12,6 +12,19 @@
 
 bool nts::Execute::_stop {false};
 
+void nts::Execute::mainLoop(nts::graph graph)
+{
+    std::string command;
+    while (!_end) {
+        std::cout << "> ";
+        getline(std::cin, command);
+        if (std::cin.eof())
+            exit();
+        else
+            checkCommand(command, &graph);
+    }
+}
+
 nts::Execute::Execute(nts::graph *graph) : _graph(graph), _end{false}, _tick{0}
 {
     _execution.insert(std::make_pair("simulate", &nts::Execute::simulate));

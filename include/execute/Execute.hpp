@@ -21,6 +21,8 @@ namespace nts {
 
         void exec(std::string &type);
 
+        void mainLoop(nts::graph graph);
+
         void simulate();
         void exit();
         void display();

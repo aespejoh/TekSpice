@@ -8,25 +8,20 @@
 
 int main(int ac, char **av)
 {
-    if (ac < 1)
-        return (84);
-    std::string command;
-
+    if (ac < 2) {
+        std::cout << "Not enough arguments" << std::endl;
+        return 84;
+    }
     try {
         nts::File file(av[1]);
         nts::File fileCheck(av[1]);
         nts::graph graph(&file, &fileCheck);
         nts::Execute exec(&graph);
-        while (!exec.getEnd()) {
-            std::cout << "> ";
-            getline(std::cin, command);
-            if (std::cin.eof())
-                exec.exit();
-            else
-                exec.checkCommand(command, &graph);
-        }
+        exec.mainLoop(graph);
+
     } catch (nts::basicException exception) {
         std::cout << "An exception has occurred: " << exception.what() << std::endl;
+        return 84;
     }
     return 0;
 }
