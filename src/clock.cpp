@@ -23,6 +23,7 @@ nts::Tristate nts::Clock::compute(std::size_t pin)
         pin1->setState(FALSE);
     else if (pin1->getState() == FALSE)
         pin1->setState(TRUE);
+    return UNDEFINED;
 }
 
 void nts::Clock::setLink(std::size_t pin, nts::IComponent *other,
