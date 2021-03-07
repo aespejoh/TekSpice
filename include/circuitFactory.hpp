@@ -16,6 +16,8 @@
 #include "input.hpp"
 #include "output.hpp"
 #include "clock.hpp"
+#include "true.hpp"
+#include "false.hpp"
 #include <map>
 
 namespace nts {
@@ -35,6 +37,8 @@ namespace nts {
             std::unique_ptr<nts::IComponent> create4030();
             std::unique_ptr<nts::IComponent> create4069();
             std::unique_ptr<nts::IComponent> create4071();
+            std::unique_ptr<nts::IComponent> createTrue();
+            std::unique_ptr<nts::IComponent> createFalse();
 
     };
 }
