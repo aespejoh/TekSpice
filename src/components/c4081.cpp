@@ -30,7 +30,6 @@ nts::Tristate nts::C4081::compute(std::size_t pin)
     }
     else
         return p->getState();
-
 }
 
 void nts::C4081::setLink(std::size_t pin, IComponent *other,
@@ -45,8 +44,19 @@ void nts::C4081::dump() const
 
 nts::C4081::C4081()
 {
-    ComponentCreator creator;
-    _map = creator.create_map_chipset("nts/4081.nts", this);
+    _map.addPin(Pin::I, UNDEFINED, this); //1
+    _map.addPin(Pin::I, UNDEFINED, this); //2
+    _map.addPin(Pin::O, UNDEFINED, this); //3
+    _map.addPin(Pin::O, UNDEFINED, this); //4
+    _map.addPin(Pin::I, UNDEFINED, this); //5
+    _map.addPin(Pin::I, UNDEFINED, this); //6
+    _map.addPin(Pin::I, UNDEFINED, this); //7
+    _map.addPin(Pin::I, UNDEFINED, this); //8
+    _map.addPin(Pin::I, UNDEFINED, this); //9
+    _map.addPin(Pin::O, UNDEFINED, this); //10
+    _map.addPin(Pin::O, UNDEFINED, this); //11
+    _map.addPin(Pin::I, UNDEFINED, this); //12
+    _map.addPin(Pin::I, UNDEFINED, this); //13
     setConnections(1,2,3);
     setConnections(5,6,4);
     setConnections(13,12,11);

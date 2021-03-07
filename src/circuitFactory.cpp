@@ -13,6 +13,8 @@ std::unique_ptr<nts::IComponent> nts::CircuitFactory::createComponent(
 )
 {
     auto it = _command_list.find(type);
+    if (it == _command_list.end())
+        exit(84);
     return (this->*it->second)();
 }
 
@@ -22,6 +24,7 @@ nts::CircuitFactory::CircuitFactory()
     _command_list.insert(std::make_pair("output", &CircuitFactory::createOutput));
     _command_list.insert(std::make_pair("4081", &CircuitFactory::create4081));
     _command_list.insert(std::make_pair("4001", &CircuitFactory::create4001));
+    _command_list.insert(std::make_pair("clock", &CircuitFactory::createClock));
 }
 
 std::unique_ptr<nts::IComponent> nts::CircuitFactory::create4081()
@@ -42,4 +45,9 @@ std::unique_ptr<nts::IComponent> nts::CircuitFactory::createInput()
 std::unique_ptr<nts::IComponent> nts::CircuitFactory::createOutput()
 {
     return std::make_unique<Output>();
+}
+
+std::unique_ptr<nts::IComponent> nts::CircuitFactory::createClock()
+{
+    return std::make_unique<Clock>();
 }

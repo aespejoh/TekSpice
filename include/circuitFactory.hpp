@@ -12,6 +12,7 @@
 #include "c4001.hpp"
 #include "input.hpp"
 #include "output.hpp"
+#include "clock.hpp"
 #include <map>
 
 namespace nts {
@@ -27,6 +28,7 @@ namespace nts {
             std::unique_ptr<nts::IComponent> create4001();
             std::unique_ptr<nts::IComponent> createInput();
             std::unique_ptr<nts::IComponent> createOutput();
+            std::unique_ptr<nts::IComponent> createClock();
     };
 }
 #endif //BOOTSTRAP_CIRCUITFACTORY_HPP

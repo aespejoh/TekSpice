@@ -5,11 +5,27 @@
 ** Created by aespejo,
 */
 #include "include/components/c4001.hpp"
+#include "logic.hpp"
 
 nts::C4001::C4001()
 {
-    ComponentCreator creator;
-    _map = creator.create_map_chipset("nts/4001.nts", this);
+    _map.addPin(Pin::I, UNDEFINED, this); //1
+    _map.addPin(Pin::I, UNDEFINED, this); //2
+    _map.addPin(Pin::O, UNDEFINED, this); //3
+    _map.addPin(Pin::O, UNDEFINED, this); //4
+    _map.addPin(Pin::I, UNDEFINED, this); //5
+    _map.addPin(Pin::I, UNDEFINED, this); //6
+    _map.addPin(Pin::I, UNDEFINED, this); //7
+    _map.addPin(Pin::I, UNDEFINED, this); //8
+    _map.addPin(Pin::I, UNDEFINED, this); //9
+    _map.addPin(Pin::O, UNDEFINED, this); //10
+    _map.addPin(Pin::O, UNDEFINED, this); //11
+    _map.addPin(Pin::I, UNDEFINED, this); //12
+    _map.addPin(Pin::I, UNDEFINED, this); //13
+    setConnections(1,2,3);
+    setConnections(5,6,4);
+    setConnections(12,13,11);
+    setConnections(9,8,10);
 }
 
 nts::C4001::~C4001()
@@ -22,7 +38,22 @@ void nts::C4001::simulate(std::size_t tick)
 
 nts::Tristate nts::C4001::compute(std::size_t pin)
 {
-    return nts::FALSE;
+    Pin *p = _map.getpin_N(pin);
+    Pin *input1;
+    Pin *input2;
+    if (p->getType() == nts::Pin::Type::O) {
+        for (auto &elem : _links) {
+            for (auto &tmp : elem) {
+                if (tmp->getN() == p->getN()) {
+                    input1 = elem[0];
+                    input2 = elem[1];
+                }
+            }
+        }
+        return or_gate(input1->getState(), input2->getState());
+    }
+    else
+        return p->getState();
 }
 
 void nts::C4001::setLink(std::size_t pin, IComponent *other,
