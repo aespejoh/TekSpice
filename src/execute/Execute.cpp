@@ -84,6 +84,8 @@ void nts::Execute::simulate()
     Pin *pin1;
     Pin *pin2;
     for (auto &element : *_graph->getComponents()) {
+        if (element->getType() == "clock")
+            element->compute(1);
         if (element->getType() == "output")
             pin = element->getMap()->getpin_N(1);
         for (auto &el : *_graph->getPinGraph()) {
@@ -110,7 +112,7 @@ void nts::Execute::display()
     std::cout << "tick: " << _tick << std::endl;
     std::cout << "input(s):" << std::endl;
     for (auto &element : *_graph->getComponents()) {
-        if (element->getType() == "input" && !element->getMap()->getPins()->empty())
+        if ((element->getType() == "input" || element->getType() == "clock") && !element->getMap()->getPins()->empty())
             std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
     }
     std::cout << "output(s):" << std::endl;
