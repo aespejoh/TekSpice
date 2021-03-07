@@ -26,6 +26,8 @@ namespace nts {
         void display();
         void dump();
         void update();
+        void loop();
+        static void stop(int);
         void changeValue(std::string& command, graph *);
         void checkCommand(std::string &command, nts::graph *graph);
 
@@ -33,6 +35,7 @@ namespace nts {
         typedef std::map<std::string, fnc_ptr> map_t;
 
     private:
+        static bool _stop;
         graph *_graph;
         map_t _execution;
         int _tick;

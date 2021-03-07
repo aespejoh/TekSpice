@@ -9,8 +9,7 @@
 
 nts::Input::Input()
 {
-    ComponentCreator creator;
-    _map = creator.create_map_chipset("nts/input.nts", this);
+    _map.addPin(Pin::I, UNDEFINED, this);
     this->setType("input");
 }
 

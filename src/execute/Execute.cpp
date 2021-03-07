@@ -8,12 +8,16 @@
 #include <iostream>
 #include "include/execute/Execute.hpp"
 #include "include/exceptions/executeException.hpp"
+#include <csignal>
+
+bool nts::Execute::_stop {false};
 
 nts::Execute::Execute(nts::graph *graph) : _graph(graph), _end{false}, _tick{0}
 {
     _execution.insert(std::make_pair("simulate", &nts::Execute::simulate));
     _execution.insert(std::make_pair("exit", &nts::Execute::exit));
     _execution.insert(std::make_pair("display", &nts::Execute::display));
+    _execution.insert(std::make_pair("loop", &nts::Execute::loop));
 }
 
 nts::Execute::~Execute() {}
@@ -134,4 +138,20 @@ void nts::Execute::update()
             if (i[0]->getState() != UNDEFINED)
                 i[1]->setState(i[0]->getState());
     }
+}
+
+void nts::Execute::loop()
+{
+    _stop = false;
+    std::signal(SIGINT, Execute::stop);
+    while (!_stop) {
+        simulate();
+        display();
+    }
+    std::signal(SIGINT, SIG_DFL);
+}
+
+void nts::Execute::stop(int)
+{
+    _stop = true;
 }

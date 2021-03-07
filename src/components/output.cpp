@@ -9,8 +9,7 @@
 
 nts::Output::Output()
 {
-    ComponentCreator creator;
-    _map = creator.create_map_chipset("nts/outputs.nts", this);
+    _map.addPin(Pin::O, UNDEFINED, this);
     this->setType("output");
 }
 
