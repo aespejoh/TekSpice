@@ -5,10 +5,13 @@
 ** graph.cpp.cc
 */
 
+#include "exceptions/fileException.hpp"
+#include "exceptions/ComponentException.hpp"
 #include "graph.hpp"
 
-nts::graph::graph(nts::File *file)
+nts::graph::graph(nts::File *file, nts::File *fileCheck)
 {
+    checkFile(fileCheck);
     std::string line;
 
     while (file->nextLine(line)) {
@@ -24,14 +27,30 @@ nts::graph::graph(nts::File *file)
     }
 }
 
+void nts::graph::checkFile(nts::File *file)
+{
+    std::string line;
+    bool chipset = false;
+    bool links = false;
+
+    while (file->nextLine(line)) {
+        if (line == ".chipsets:")
+            chipset = true;
+        if (line == ".links:")
+            links = true;
+    }
+    if (!chipset || !links)
+        throw nts::fileException("There is not enough information on the file");
+}
+
 void nts::graph::sepParse(nts::Line parse)
 {
     if (parse.getComponents().size() != 2)
         return;
     if (is_chipset) {
         IComponent *component = factory.createComponent(parse.getComponents()[0]).release();
-        if (component == nullptr) //exception if fails create component
-            return;
+        if (component == nullptr)
+            throw nts::ComponentException("Component not created correctly");
         component->setName(parse.getComponents()[1]);
         _components.push_back(component);
         component = nullptr;
@@ -87,11 +106,11 @@ void nts::graph::createGraph(const std::string& componentOne,
     int pin1 = getInt(componentOne);
     int pin2 = getInt(componentTwo);
     IComponent *firstComponent = getComponent(nameOne);
-    if (firstComponent == nullptr) //exceptions if getcomponent fails
-        throw ;
+    if (firstComponent == nullptr)
+        throw nts::ComponentException("Component '" + nameOne + "' not found");
     IComponent *secondComponent = getComponent(nameTwo);
-    if (secondComponent == nullptr) //exceptions if getcomponent fails
-        throw ;
+    if (secondComponent == nullptr)
+        throw nts::ComponentException("Component '" + nameTwo + "' not found");
     pin_tmp.push_back(firstComponent->getMap()->getpin_N(pin1));
     pin_tmp.push_back(secondComponent->getMap()->getpin_N(pin2));
     tmp.push_back(firstComponent);

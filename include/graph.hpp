@@ -20,12 +20,13 @@
 namespace nts {
     class graph {
     public:
-        explicit graph(nts::File *file);
+        explicit graph(nts::File *file, nts::File *fileCheck);
         ~graph() = default;
 
         std::vector<std::vector<IComponent*>> *getGraph();
         std::vector<std::vector<Pin*>> *getPinGraph();
         std::vector<IComponent*> *getComponents();
+        void checkFile(nts::File *);
 
     private:
         std::vector<std::vector<IComponent*>> _graph;

@@ -12,6 +12,7 @@
 #include <vector>
 #include <sstream>
 #include "pin.hpp"
+#include "file.hpp"
 
 namespace nts {
     class Line {
