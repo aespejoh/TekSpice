@@ -16,13 +16,9 @@ namespace nts {
     public:
         explicit Execute(graph *graph);
         ~Execute();
-
         bool getEnd();
-
         void exec(std::string &type);
-
         void mainLoop(nts::graph graph);
-
         void simulate();
         void exit();
         void display();
@@ -32,7 +28,6 @@ namespace nts {
         static void stop(int);
         void changeValue(std::string& command, graph *);
         void checkCommand(std::string &command, nts::graph *graph);
-
         typedef void (nts::Execute::*fnc_ptr)();
         typedef std::map<std::string, fnc_ptr> map_t;
 

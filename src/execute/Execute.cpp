@@ -111,13 +111,13 @@ void nts::Execute::simulate()
             if (i != el.end()) {
                 pin1 = el[0];
                 pin2 = el[1];
+                if (pin1->getComponent()->getType() == "output")
+                    pin1->setState(pin2->getComponent()->compute(pin2->getN()));
+                else if (pin2->getComponent()->getType() == "output")
+                    pin2->setState(pin1->getComponent()->compute(pin1->getN()));
             }
         }
     }
-    if (pin1->getComponent()->getType() == "output")
-        pin1->setState(pin2->getComponent()->compute(pin2->getN()));
-    else if (pin2->getComponent()->getType() == "output")
-        pin2->setState(pin1->getComponent()->compute(pin1->getN()));
 }
 
 void nts::Execute::exit()
@@ -130,13 +130,17 @@ void nts::Execute::display()
     std::cout << "tick: " << _tick << std::endl;
     std::cout << "input(s):" << std::endl;
     for (auto &element : *_graph->getComponents()) {
-        if ((element->getType() == "input" || element->getType() == "clock") && !element->getMap()->getPins()->empty())
-            std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
+        if ((element->getType() == "input" || element->getType() == "clock" ||
+        element->getType() == "true" || element->getType() == "false")
+        && !element->getMap()->getPins()->empty())
+            std::cout << "\t " << element->getName() << ": " <<
+            element->getMap()->getpin_N(1)->getPrintState() << std::endl;
     }
     std::cout << "output(s):" << std::endl;
     for (auto &element : *_graph->getComponents()) {
         if (element->getType() == "output" && !element->getMap()->getPins()->empty())
-            std::cout << "\t " << element->getName() << ": " << element->getMap()->getpin_N(1)->getPrintState() << std::endl;
+            std::cout << "\t " << element->getName() << ": " <<
+            element->getMap()->getpin_N(1)->getPrintState() << std::endl;
     }
 }
 
