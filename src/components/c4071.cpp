@@ -73,4 +73,6 @@ void nts::C4071::setConnections(int pin1, int pin2, int outputPin)
 
 void nts::C4071::dump() const
 {
+    std::cout << "CIRCUIT 4071:" << std::endl;
+    std::cout << "\tname -> " << _name << std::endl << std::endl;
 }

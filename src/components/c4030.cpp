@@ -74,4 +74,6 @@ void nts::C4030::setConnections(int pin1, int pin2, int outputPin)
 
 void nts::C4030::dump() const
 {
+    std::cout << "CIRCUIT 4030:" << std::endl;
+    std::cout << "\tname -> " << _name << std::endl << std::endl;
 }

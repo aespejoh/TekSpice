@@ -48,4 +48,6 @@ void nts::C4069::setConnections(int pin1, int pin2, int outputPin)
 
 void nts::C4069::dump() const
 {
+    std::cout << "CIRCUIT 4069:" << std::endl;
+    std::cout << "\tname -> " << _name << std::endl << std::endl;
 }

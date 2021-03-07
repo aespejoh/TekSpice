@@ -6,6 +6,7 @@
 */
 
 #include "circuitFactory.hpp"
+#include "exceptions/ComponentException.hpp"
 #include <algorithm>
 
 std::unique_ptr<nts::IComponent> nts::CircuitFactory::createComponent(
@@ -14,7 +15,7 @@ std::unique_ptr<nts::IComponent> nts::CircuitFactory::createComponent(
 {
     auto it = _command_list.find(type);
     if (it == _command_list.end())
-        exit(84);
+        throw ComponentException("Component does not exist");
     return (this->*it->second)();
 }
 

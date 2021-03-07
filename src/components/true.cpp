@@ -33,6 +33,9 @@ void nts::True::setLink(std::size_t pin, nts::IComponent *other,
 
 void nts::True::dump() const
 {
+    std::cout << "OUTPUT:" << std::endl;
+    std::cout << "\tname -> " << _name << std::endl;
+    std::cout << "\tstate of the output -> True" << std::endl;
 }
 
 void nts::True::setConnections(int pin1, int pin2, int outputPin)

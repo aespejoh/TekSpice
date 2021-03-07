@@ -40,6 +40,8 @@ void nts::C4081::setLink(std::size_t pin, IComponent *other,
 
 void nts::C4081::dump() const
 {
+    std::cout << "CIRCUIT 4081:" << std::endl;
+    std::cout << "\tname -> " << _name << std::endl << std::endl;
 }
 
 nts::C4081::C4081()

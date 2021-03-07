@@ -65,6 +65,8 @@ void nts::C4001::setLink(std::size_t pin, IComponent *other,
 
 void nts::C4001::dump() const
 {
+    std::cout << "CIRCUIT 4001:" << std::endl;
+    std::cout << "\tname -> " << _name << std::endl << std::endl;
 }
 
 void nts::C4001::setConnections(int pin1, int pin2, int outputPin)

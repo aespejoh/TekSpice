@@ -18,6 +18,7 @@ nts::Execute::Execute(nts::graph *graph) : _graph(graph), _end{false}, _tick{0}
     _execution.insert(std::make_pair("exit", &nts::Execute::exit));
     _execution.insert(std::make_pair("display", &nts::Execute::display));
     _execution.insert(std::make_pair("loop", &nts::Execute::loop));
+    _execution.insert(std::make_pair("dump", &nts::Execute::dump));
 }
 
 nts::Execute::~Execute() {}
@@ -128,7 +129,8 @@ void nts::Execute::display()
 
 void nts::Execute::dump()
 {
-
+    for (auto &element : *_graph->getComponents())
+        element->dump();
 }
 
 void nts::Execute::update()
