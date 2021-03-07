@@ -13,6 +13,7 @@
 #include "c4030.hpp"
 #include "c4069.hpp"
 #include "c4071.hpp"
+#include "c4011.hpp"
 #include "input.hpp"
 #include "output.hpp"
 #include "clock.hpp"
@@ -39,6 +40,7 @@ namespace nts {
             std::unique_ptr<nts::IComponent> create4071();
             std::unique_ptr<nts::IComponent> createTrue();
             std::unique_ptr<nts::IComponent> createFalse();
+            std::unique_ptr<nts::IComponent> create4011();
 
     };
 }
