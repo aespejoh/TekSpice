@@ -169,6 +169,9 @@ std::vector<nts::IComponent*> * nts::graph::getComponents() {
 int nts::graph::getInt(std::string component)
 {
     size_t found = component.find(':');
+    std::string comp = component.substr(0, found);
+    if (found + 1 >= component.length())
+        throw nts::ComponentException("Missing pin for component: " + comp);
     std::string name = component.substr(found + 1, component.length());
     int n = std::stoi(name);
     return n;
